@@ -40,11 +40,13 @@ public class LoginURLFragment extends Fragment implements TextWatcher {
 	protected TextView textHttpWarning;
 	protected EditText editBaseURI, editUserName, editPassword;
 	protected CheckBox checkboxPreemptive;
+    protected CheckBox checkboxIgnoreCertificate;
 	protected Button btnNext;
 	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 		View v = inflater.inflate(R.layout.setup_login_url, container, false);
 		
 		// protocol selection spinner
@@ -75,6 +77,7 @@ public class LoginURLFragment extends Fragment implements TextWatcher {
 		editPassword.addTextChangedListener(this);
 		
 		checkboxPreemptive = (CheckBox) v.findViewById(R.id.auth_preemptive);
+        checkboxIgnoreCertificate = (CheckBox) v.findViewById(R.id.auth_ignore_certificate);
 		
 		// hook into action bar
 		setHasOptionsMenu(true);
@@ -101,6 +104,7 @@ public class LoginURLFragment extends Fragment implements TextWatcher {
 			args.putString(QueryServerDialogFragment.EXTRA_USER_NAME, editUserName.getText().toString());
 			args.putString(QueryServerDialogFragment.EXTRA_PASSWORD, editPassword.getText().toString());
 			args.putBoolean(QueryServerDialogFragment.EXTRA_AUTH_PREEMPTIVE, checkboxPreemptive.isChecked());
+            args.putBoolean(QueryServerDialogFragment.EXTRA_IGNORE_CERTIFICATE, checkboxIgnoreCertificate.isChecked());
 			
 			DialogFragment dialog = new QueryServerDialogFragment();
 			dialog.setArguments(args);

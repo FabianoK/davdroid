@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,11 +46,23 @@ public class DavResourceFinder implements Closeable {
 	protected CloseableHttpClient httpClient;
 	
 	
-	public DavResourceFinder(Context context) {
+	public DavResourceFinder(Context context, boolean ignoreCertificate) {
 		this.context = context;
 		
-		// disable compression and enable network logging for debugging purposes 
-		httpClient = DavHttpClient.create();
+		// disable compression and enable network logging for debugging purposes
+        if(ignoreCertificate) {
+            try {
+                httpClient = DavHttpClient.createWithoutCertificate();
+            } catch (KeyStoreException e) {
+                Log.i(TAG, e.getMessage());
+            } catch (NoSuchAlgorithmException e) {
+                Log.i(TAG, e.getMessage());
+            } catch (KeyManagementException e) {
+                Log.i(TAG, e.getMessage());
+            }
+        }else {
+            httpClient = DavHttpClient.createWithCertificate();
+        }
 	}
 
 	@Override
