@@ -87,7 +87,9 @@ public class AccountDetailsFragment extends Fragment implements TextWatcher {
 		AccountManager accountManager = AccountManager.get(getActivity());
 		Account account = new Account(accountName, Constants.ACCOUNT_TYPE);
 		Bundle userData = AccountSettings.createBundle(serverInfo);
-		
+
+        accountManager.setUserData(account, "auth_ignoreSSL", new Boolean(serverInfo.isIgnoreCertificate()).toString());
+
 		boolean syncContacts = false;
 		for (ServerInfo.ResourceInfo addressBook : serverInfo.getAddressBooks())
 			if (addressBook.isEnabled()) {

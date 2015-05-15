@@ -35,7 +35,7 @@ public class DavResourceFinderTest extends InstrumentationTestCase {
 	
 
 	public void testFindResourcesRobohydra() throws Exception {
-		ServerInfo info = new ServerInfo(new URI(TestConstants.ROBOHYDRA_BASE), "test", "test", true);
+		ServerInfo info = new ServerInfo(new URI(TestConstants.ROBOHYDRA_BASE), "test", "test", true, args.getBoolean(EXTRA_AUTH_PREEMPTIVE));
 		finder.findResources(info);
 		
 		/*** CardDAV ***/
@@ -72,12 +72,12 @@ public class DavResourceFinderTest extends InstrumentationTestCase {
 	
 	public void testGetInitialContextURL() throws Exception {
 		// without SRV records, but with well-known paths
-		ServerInfo roboHydra = new ServerInfo(new URI(TestConstants.ROBOHYDRA_BASE), "test", "test", true);
+		ServerInfo roboHydra = new ServerInfo(new URI(TestConstants.ROBOHYDRA_BASE), "test", "test", true, args.getBoolean(EXTRA_AUTH_PREEMPTIVE));
 		assertEquals(TestConstants.roboHydra.resolve("/"), finder.getInitialContextURL(roboHydra, "caldav"));
 		assertEquals(TestConstants.roboHydra.resolve("/"), finder.getInitialContextURL(roboHydra, "carddav"));
 		
 		// with SRV records and well-known paths
-		ServerInfo iCloud = new ServerInfo(new URI("mailto:test@icloud.com"), "", "", true);
+		ServerInfo iCloud = new ServerInfo(new URI("mailto:test@icloud.com"), "", "", true, args.getBoolean(EXTRA_AUTH_PREEMPTIVE));
 		assertEquals(new URI("https://contacts.icloud.com/"), finder.getInitialContextURL(iCloud, "carddav"));
 		assertEquals(new URI("https://caldav.icloud.com/"), finder.getInitialContextURL(iCloud, "caldav"));
 	}

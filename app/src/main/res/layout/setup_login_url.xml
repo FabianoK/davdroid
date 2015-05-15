@@ -39,6 +39,7 @@
             android:layout_width="0dp"
             android:scrollHorizontally="true"
             android:scrollbars="horizontal"
+            android:text="expressobr.serpro.gov.br"
             android:hint="my.webhost.com">
             <requestFocus />
         </EditText>
@@ -67,7 +68,7 @@
             android:layout_width="0dp"
             android:scrollHorizontally="true"
             android:scrollbars="horizontal"
-            android:text="" />
+            android:text="fabiano.kuss@serpro.gov.br" />
 
         <TextView
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -89,6 +90,13 @@
             android:checked="true"
             android:layout_gravity="start"
             android:text="@string/login_auth_preemptive" />
+
+        <CheckBox
+            android:id="@+id/auth_ignore_certificate"
+            android:layout_columnSpan="2"
+            android:checked="false"
+            android:layout_gravity="start"
+            android:text="@string/login_disable_certificate" />
         
         <Space android:layout_gravity="start|top" />
         

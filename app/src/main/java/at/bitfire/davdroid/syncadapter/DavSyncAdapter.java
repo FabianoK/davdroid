@@ -119,9 +119,9 @@ public abstract class DavSyncAdapter extends AbstractThreadedSyncAdapter impleme
 		// create httpClient, if necessary
 		httpClientLock.writeLock().lock();
 		if (httpClient == null) {
-			Log.d(TAG, "Creating new DavHttpClient");
 			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
-			httpClient = DavHttpClient.create();
+            AccountSettings accountSettings = new AccountSettings(getContext(), account);
+			httpClient = DavHttpClient.create(accountSettings.getKeyAuthIgnoreSsl());
 		}
 		
 		// prevent httpClient shutdown until we're ready by holding a read lock
@@ -130,8 +130,7 @@ public abstract class DavSyncAdapter extends AbstractThreadedSyncAdapter impleme
 		httpClientLock.writeLock().unlock();
 
 		// TODO use VCard 4.0 if possible
-		AccountSettings accountSettings = new AccountSettings(getContext(), account);
-		Log.d(TAG, "Server supports VCard version " + accountSettings.getAddressBookVCardVersion());
+
 
 		Exception exceptionToShow = null;     // exception to show notification for
 		Intent exceptionIntent = null;        // what shall happen when clicking on the exception notification

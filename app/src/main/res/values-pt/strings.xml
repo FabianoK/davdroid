@@ -95,6 +95,7 @@
     <string name="login_user_name">Usuário:</string>
     <string name="login_base_url">URL inicial (container de dados detectados automáticamente):</string>
     <string name="login_auth_preemptive">Autenticação preferida (recomendado, mas incompatível com Digest)</string>
+    <string name="login_disable_certificate">Desabilitar verificação de certificado(não recomendado, só faça se estiver seguro)</string>
 
     <string name="login_password">Senha:</string>
 

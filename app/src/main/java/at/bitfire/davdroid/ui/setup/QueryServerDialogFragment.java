@@ -31,6 +31,7 @@ import java.security.cert.CertPathValidatorException;
 import at.bitfire.davdroid.R;
 import at.bitfire.davdroid.resource.DavResourceFinder;
 import at.bitfire.davdroid.resource.ServerInfo;
+import at.bitfire.davdroid.syncadapter.AccountSettings;
 import at.bitfire.davdroid.webdav.DavException;
 import lombok.Cleanup;
 
@@ -40,7 +41,8 @@ public class QueryServerDialogFragment extends DialogFragment implements LoaderC
 		EXTRA_BASE_URI = "base_uri",
 		EXTRA_USER_NAME = "user_name",
 		EXTRA_PASSWORD = "password",
-		EXTRA_AUTH_PREEMPTIVE = "auth_preemptive";
+		EXTRA_AUTH_PREEMPTIVE = "auth_preemptive",
+        EXTRA_IGNORE_CERTIFICATE = "ignore_certificate";
 	
 	ProgressBar progressBar;
 	
@@ -107,11 +109,12 @@ public class QueryServerDialogFragment extends DialogFragment implements LoaderC
 				URI.create(args.getString(EXTRA_BASE_URI)),
 				args.getString(EXTRA_USER_NAME),
 				args.getString(EXTRA_PASSWORD),
-				args.getBoolean(EXTRA_AUTH_PREEMPTIVE)
+                args.getBoolean(EXTRA_AUTH_PREEMPTIVE),
+				args.getBoolean(EXTRA_IGNORE_CERTIFICATE)
 			);
-			
+
 			try {
-				@Cleanup DavResourceFinder finder = new DavResourceFinder(context);
+				@Cleanup DavResourceFinder finder = new DavResourceFinder(context, serverInfo.isIgnoreCertificate());
 				finder.findResources(serverInfo);
 			} catch (URISyntaxException e) {
 				serverInfo.setErrorMessage(getContext().getString(R.string.exception_uri_syntax, e.getMessage()));

@@ -32,6 +32,11 @@
             android:summaryOn="@string/settings_preemptive_on"
             android:summaryOff="@string/settings_preemptive_off" />
 
+        <CheckBoxPreference
+            android:key="ignore_certificate"
+            android:persistent="false"
+            android:title="@string/login_disable_certificate"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_sync">

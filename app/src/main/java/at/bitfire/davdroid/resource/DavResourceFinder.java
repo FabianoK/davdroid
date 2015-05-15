@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,11 +46,14 @@ public class DavResourceFinder implements Closeable {
 	protected CloseableHttpClient httpClient;
 	
 	
-	public DavResourceFinder(Context context) {
+	public DavResourceFinder(Context context, boolean ignoreCertificate) {
 		this.context = context;
-		
-		// disable compression and enable network logging for debugging purposes 
-		httpClient = DavHttpClient.create();
+
+        if(ignoreCertificate) {
+            httpClient = DavHttpClient.create(true);
+        }else {
+            httpClient = DavHttpClient.create(false);
+        }
 	}
 
 	@Override
@@ -161,8 +167,7 @@ public class DavResourceFinder implements Closeable {
 			throw new DavIncapableException(context.getString(R.string.setup_neither_caldav_nor_carddav));
 
 	}
-	
-	
+
 	/**
 	 * Finds the initial service URL from a given base URI (HTTP[S] or mailto URI, user name, password)
 	 * @param serverInfo	User-given service information (including base URI, i.e. HTTP[S] URL+user name+password or mailto URI and password)

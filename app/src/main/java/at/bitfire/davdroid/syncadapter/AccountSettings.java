@@ -39,6 +39,7 @@ public class AccountSettings {
 		
 		KEY_USERNAME = "user_name",
 		KEY_AUTH_PREEMPTIVE = "auth_preemptive",
+        KEY_AUTH_IGNORE_CERTIFICATE = "auth_ignore_certificate",
 		
 		KEY_ADDRESSBOOK_URL = "addressbook_url",
 		KEY_ADDRESSBOOK_CTAG = "addressbook_ctag",
@@ -74,6 +75,7 @@ public class AccountSettings {
 		bundle.putString(KEY_SETTINGS_VERSION, String.valueOf(CURRENT_VERSION));
 		bundle.putString(KEY_USERNAME, serverInfo.getUserName());
 		bundle.putString(KEY_AUTH_PREEMPTIVE, Boolean.toString(serverInfo.isAuthPreemptive()));
+        bundle.putString(KEY_AUTH_IGNORE_CERTIFICATE, Boolean.toString(serverInfo.isIgnoreCertificate()));
 		for (ServerInfo.ResourceInfo addressBook : serverInfo.getAddressBooks())
 			if (addressBook.isEnabled()) {
 				bundle.putString(KEY_ADDRESSBOOK_URL, addressBook.getURL());
@@ -99,6 +101,8 @@ public class AccountSettings {
 	public boolean getPreemptiveAuth() { return Boolean.parseBoolean(accountManager.getUserData(account, KEY_AUTH_PREEMPTIVE)); }
 	public void setPreemptiveAuth(boolean preemptive) { accountManager.setUserData(account, KEY_AUTH_PREEMPTIVE, Boolean.toString(preemptive)); }
 
+    public boolean getKeyAuthIgnoreSsl() { return Boolean.parseBoolean(accountManager.getUserData(account, KEY_AUTH_IGNORE_CERTIFICATE)); }
+    public void setKeyAuthIgnoreSsl(boolean preemptive) { accountManager.setUserData(account, KEY_AUTH_IGNORE_CERTIFICATE, Boolean.toString(preemptive)); }
 
 	// sync. settings
 

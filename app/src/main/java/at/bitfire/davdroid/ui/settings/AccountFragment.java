@@ -61,18 +61,31 @@ public class AccountFragment extends PreferenceFragment {
 			}
 		});
 
-		final CheckBoxPreference prefPreemptive = (CheckBoxPreference)findPreference("preemptive");
-		prefPreemptive.setChecked(settings.getPreemptiveAuth());
-		prefPreemptive.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+		final CheckBoxPreference prefIgnoreCertificate = (CheckBoxPreference)findPreference("ignore_certificate");
+        prefIgnoreCertificate.setChecked(settings.getKeyAuthIgnoreSsl());
+        prefIgnoreCertificate.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				settings.setPreemptiveAuth((Boolean)newValue);
+				settings.setKeyAuthIgnoreSsl((Boolean)newValue);
 				readFromAccount();
 				return true;
 			}
 		});
 
-		final ListPreference prefSyncContacts = (ListPreference)findPreference("sync_interval_contacts");
+        final CheckBoxPreference prefPreemptive = (CheckBoxPreference)findPreference("preemptive");
+        prefPreemptive.setChecked(settings.getPreemptiveAuth());
+        prefPreemptive.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                settings.setPreemptiveAuth((Boolean)newValue);
+                readFromAccount();
+                return true;
+            }
+        });
+
+
+
+        final ListPreference prefSyncContacts = (ListPreference)findPreference("sync_interval_contacts");
 		final Long syncIntervalContacts = settings.getContactsSyncInterval();
 		if (syncIntervalContacts != null) {
 			prefSyncContacts.setValue(syncIntervalContacts.toString());
